@@ -37,7 +37,7 @@ resource "aws_acm_certificate_validation" "site" {
 }
 
 resource "aws_cloudfront_origin_access_identity" "site" {
-    comment = "andrewmoreland.net OAI"
+    comment = "${var.primary_fqdn} OAI"
 }
 
 resource "aws_s3_bucket" "site" {
@@ -54,7 +54,7 @@ resource "aws_s3_bucket" "site" {
                 "AWS": "${aws_cloudfront_origin_access_identity.site.iam_arn}"
             },
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::andrewmoreland.net/*"
+            "Resource": "arn:aws:s3:::${var.primary_fqdn}/*"
         }
     ]
 }
